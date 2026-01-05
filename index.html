@@ -12,44 +12,59 @@
       --text: #e6e9ef;
       --muted: #9aa4b2;
       --accent: #6cf2c2;
+      --glow: #4dd8ff;
       --border: #1f2937;
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      box-sizing: border-box;
+      font-family: Inter, system-ui, sans-serif;
     }
 
     body {
       background: radial-gradient(1200px 600px at 50% -200px, #15202f, var(--bg));
       color: var(--text);
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    a { text-decoration: none; color: inherit; }
+
+    /* ---------- FLOATING BACKGROUND ---------- */
+    .geometric-elements::before,
+    .geometric-elements::after {
+      content: "";
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(77,216,255,0.18), transparent 70%);
+      filter: blur(90px);
+      z-index: 0;
+      animation: float 22s infinite alternate ease-in-out;
     }
 
-    ul {
-      margin-left: 20px;
-      margin-top: 10px;
+    .geometric-elements::after {
+      top: 65%;
+      left: 70%;
+      animation-duration: 28s;
     }
 
-    li {
-      margin-bottom: 6px;
+    @keyframes float {
+      from { transform: translateY(0); }
+      to { transform: translateY(-140px); }
     }
 
     .container {
       max-width: 1100px;
       margin: auto;
       padding: 80px 24px;
+      position: relative;
+      z-index: 1;
     }
 
     /* ---------- HERO ---------- */
-
     .hero {
       text-align: center;
       margin-bottom: 120px;
@@ -57,9 +72,7 @@
 
     .hero h1 {
       font-size: clamp(2rem, 6vw, 3.6rem);
-      font-weight: 700;
       margin-bottom: 20px;
-      letter-spacing: -0.02em;
     }
 
     .hero p {
@@ -80,13 +93,12 @@
     .btn {
       padding: 14px 22px;
       border-radius: 12px;
-      font-weight: 600;
       border: 1px solid var(--border);
       background: var(--panel);
-      transition: all 0.2s ease;
-      cursor: pointer;
       min-width: 180px;
       text-align: center;
+      font-weight: 600;
+      transition: all 0.25s ease;
     }
 
     .btn.primary {
@@ -96,30 +108,25 @@
     }
 
     .btn:hover {
-      transform: translateY(-1px);
-      opacity: 0.95;
+      transform: translateY(-2px);
+      box-shadow: 0 0 22px rgba(77,216,255,0.35);
     }
 
     /* ---------- SECTIONS ---------- */
-
-    section {
-      margin-bottom: 120px;
-    }
+    section { margin-bottom: 120px; }
 
     section h2 {
       font-size: clamp(1.6rem, 4vw, 2rem);
       margin-bottom: 20px;
-      letter-spacing: -0.01em;
     }
 
     section p {
-      color: var(--muted);
       max-width: 760px;
-      margin-bottom: 28px;
+      color: var(--muted);
+      margin-bottom: 18px;
     }
 
-    /* ---------- PROBLEM ---------- */
-
+    /* ---------- LISTS / CARDS ---------- */
     .problem-list {
       display: grid;
       gap: 16px;
@@ -131,9 +138,14 @@
       padding: 20px;
       border-radius: 14px;
       border: 1px solid var(--border);
+      transition: all 0.25s ease;
     }
 
-    /* ---------- AI NATIVE ---------- */
+    .problem-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 22px rgba(77,216,255,0.25);
+      border-color: var(--glow);
+    }
 
     .ai-native {
       display: grid;
@@ -146,15 +158,16 @@
       padding: 22px;
       border-radius: 16px;
       border: 1px solid var(--border);
+      transition: all 0.25s ease;
     }
 
-    .ai-card h3 {
-      margin-bottom: 10px;
-      font-size: 1.15rem;
+    .ai-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 26px rgba(77,216,255,0.3);
+      border-color: var(--glow);
     }
 
     /* ---------- PROTOTYPES ---------- */
-
     .prototype-grid {
       display: grid;
       grid-template-columns: 2fr 1fr;
@@ -166,6 +179,13 @@
       padding: 26px;
       border-radius: 18px;
       border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .prototype:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 30px rgba(77,216,255,0.35);
+      border-color: var(--glow);
     }
 
     .badge {
@@ -177,18 +197,10 @@
       margin-bottom: 14px;
     }
 
-    .badge.primary {
-      background: #1e3a32;
-      color: var(--accent);
-    }
-
-    .badge.secondary {
-      background: #1f2937;
-      color: var(--muted);
-    }
+    .badge.primary { background: #1e3a32; color: var(--accent); }
+    .badge.secondary { background: #1f2937; color: var(--muted); }
 
     /* ---------- FLOW ---------- */
-
     .flow {
       display: grid;
       gap: 14px;
@@ -198,11 +210,51 @@
     .flow-step {
       padding: 14px 18px;
       border-left: 3px solid var(--accent);
-      background: rgba(108, 242, 194, 0.05);
+      background: rgba(108,242,194,0.05);
       border-radius: 8px;
+      transition: all 0.25s ease;
     }
 
-    /* ---------- FOOTER ---------- */
+    .flow-step:hover {
+      background: rgba(77,216,255,0.08);
+      box-shadow: 0 0 20px rgba(77,216,255,0.25);
+    }
+
+    /* ---------- TEAM ---------- */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--panel);
+      padding: 22px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      transition: all 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 26px rgba(77,216,255,0.3);
+      border-color: var(--glow);
+    }
+
+    .team-role {
+      font-size: 0.9rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    /* ---------- CONTACT ---------- */
+    .contact-container {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 760px;
+    }
 
     footer {
       border-top: 1px solid var(--border);
@@ -212,162 +264,163 @@
       font-size: 0.9rem;
     }
 
-    /* ---------- MOBILE OPTIMIZATION ---------- */
-
     @media (max-width: 768px) {
-      .container {
-        padding: 56px 20px;
-      }
-
-      section {
-        margin-bottom: 80px;
-      }
-
-      .hero {
-        margin-bottom: 80px;
-      }
-
-      .hero p {
-        font-size: 1rem;
-      }
-
-      .cta-group {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-      .prototype-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 44px 16px;
-      }
-
-      section h2 {
-        font-size: 1.45rem;
-      }
-
-      section p {
-        font-size: 0.95rem;
-      }
-
-      .hero h1 {
-        font-size: 2rem;
-      }
-
-      .badge {
-        font-size: 0.7rem;
-      }
+      .container { padding: 56px 20px; }
+      section { margin-bottom: 80px; }
+      .prototype-grid { grid-template-columns: 1fr; }
+      .cta-group { flex-direction: column; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HERO -->
-  <div class="container hero">
-    <h1>Food Ingredients, Explained Like a Human Would</h1>
+<div class="geometric-elements"></div>
+
+<!-- HERO -->
+<div class="container hero">
+  <h1>Food Ingredients, Explained Like a Human Would</h1>
+  <p>
+    An AI-native consumer health co-pilot that interprets ingredients,
+    reasons under uncertainty, and explains what actually matters
+    at the moment a decision is made.
+  </p>
+
+  <div class="cta-group">
+    <a class="btn primary" href="https://ashish-rautela.github.io/health-buddy/">Health Buddy</a>
+    <a class="btn" href="https://ashish-rautela.github.io/Health_assistant/">Health Assistant (Voice)</a>
+  </div>
+
+  <p style="margin-top:14px;font-size:0.9rem;color:var(--muted);">
+    Recommended: Start with <strong>Health Buddy</strong> for the full AI-native reasoning experience.
+  </p>
+</div>
+
+<div class="container">
+
+  <section>
+    <h2>The Consumer Health Gap</h2>
     <p>
-      An AI-native consumer health co-pilot that interprets ingredients,
-      reasons under uncertainty, and explains what actually matters —
-      at the exact moment a decision is made.
+      Food labels are written for compliance, not clarity. Consumers are left
+      to interpret chemistry and trade-offs under time pressure.
     </p>
-
-    <div class="cta-group">
-      <a class="btn primary" href="https://ashish-rautela.github.io/health-buddy/">Health Buddy</a>
-      <a class="btn" href="https://ashish-rautela.github.io/Health_assistant/">Health Assistant (Voice)</a>
+    <div class="problem-list">
+      <div class="problem-item">Unfamiliar chemical ingredient names</div>
+      <div class="problem-item">Conflicting or unclear health guidance</div>
+      <div class="problem-item">High cognitive load at decision time</div>
     </div>
+  </section>
 
-    <p style="margin-top: 14px; font-size: 0.9rem; color: var(--muted);">
-      Recommended: Start with <strong>Health Buddy</strong> for the full AI-native reasoning experience.
+  <section>
+    <h2>What Makes This AI-Native</h2>
+    <div class="ai-native">
+      <div class="ai-card"><h3>Intent-First</h3><p>Infers what users care about.</p></div>
+      <div class="ai-card"><h3>Reasoning</h3><p>Explains why something matters.</p></div>
+      <div class="ai-card"><h3>Uncertainty</h3><p>Honest about ambiguity.</p></div>
+      <div class="ai-card"><h3>Cognitive Relief</h3><p>Reduces mental effort.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why Two Prototypes?</h2>
+    <div class="prototype-grid">
+      <div class="prototype">
+        <span class="badge primary">Primary</span>
+        <h3>Health Buddy</h3>
+        <ul>
+          <li>Reasoning-first interface</li>
+          <li>Context-aware follow-ups</li>
+          <li>Clear trade-off explanations</li>
+        </ul>
+      </div>
+      <div class="prototype">
+        <span class="badge secondary">Exploratory</span>
+        <h3>Health Assistant (Voice)</h3>
+        <ul>
+          <li>Voice-first interaction</li>
+          <li>Hands-free usage</li>
+          <li>Accessibility exploration</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>About Our Technology</h2>
+    <p>
+      Health-Buddy is an AI-native food label co-pilot built to help users
+      understand what they are consuming at the exact moment of decision.
     </p>
-  </div>
+  </section>
 
-  <div class="container">
+  <section>
+    <h2>Core Technologies</h2>
+    <div class="ai-native">
+      <div class="ai-card"><h3>GPT-4.1 Mini</h3><p>Reasoning and explanation layer</p></div>
+      <div class="ai-card"><h3>GPT-4V (Vision)</h3><p>Label text extraction</p></div>
+      <div class="ai-card"><h3>OpenAI TTS</h3><p>Natural audio responses</p></div>
+    </div>
+  </section>
 
-    <section>
-      <h2>The Consumer Health Gap</h2>
-      <p>
-        Food labels are optimized for regulatory compliance — not for human understanding.
-        Consumers are left to parse chemistry, trade-offs, and uncertainty on their own.
-      </p>
+  <section>
+    <h2>Key Features</h2>
+    <div class="problem-list">
+      <div class="problem-item">Real-time label scanning</div>
+      <div class="problem-item">AI-native explanations</div>
+      <div class="problem-item">Session-based context</div>
+      <div class="problem-item">Voice and text interaction</div>
+      <div class="problem-item">Privacy-first design</div>
+    </div>
+  </section>
 
-      <div class="problem-list">
-        <div class="problem-item">Unfamiliar chemical ingredient names</div>
-        <div class="problem-item">Conflicting health guidance</div>
-        <div class="problem-item">High cognitive load at decision time</div>
-      </div>
-    </section>
+  <section>
+    <h2>How the System Works</h2>
+    <div class="flow">
+      <div class="flow-step">Scan food label</div>
+      <div class="flow-step">Extract visible text once</div>
+      <div class="flow-step">Create temporary session</div>
+      <div class="flow-step">Generate explanation</div>
+      <div class="flow-step">Answer follow-ups in context</div>
+      <div class="flow-step">Discard session data</div>
+    </div>
+  </section>
 
-    <section>
-      <h2>What Makes This AI-Native</h2>
-      <p>
-        This system does not behave like a database or filter tool.
-        AI itself is the interface.
-      </p>
+  <section>
+    <h2>Technical Specifications</h2>
+    <div class="problem-list">
+      <div class="problem-item">Frontend: React (Web)</div>
+      <div class="problem-item">Backend: Node.js & Express</div>
+      <div class="problem-item">Hosting: GitHub Pages & Render</div>
+      <div class="problem-item">Security: HTTPS-only</div>
+      <div class="problem-item">Performance: Near real-time</div>
+    </div>
+  </section>
 
-      <div class="ai-native">
-        <div class="ai-card">
-          <h3>Intent-First</h3>
-          <p>Infers what the user likely cares about.</p>
-        </div>
-        <div class="ai-card">
-          <h3>Reasoning</h3>
-          <p>Explains why something matters.</p>
-        </div>
-        <div class="ai-card">
-          <h3>Uncertainty</h3>
-          <p>Honest about ambiguity and trade-offs.</p>
-        </div>
-        <div class="ai-card">
-          <h3>Cognitive Relief</h3>
-          <p>Does the thinking for the user.</p>
-        </div>
-      </div>
-    </section>
+  <section>
+    <h2>Team Cypher Chasers</h2>
+    <p>Built for <strong>ENCODE 2026 Hackathon · IIT Guwahati</strong></p>
+    <div class="card-grid">
+      <div class="card"><h3>Akansh</h3></div>
+      <div class="card"><h3>Ashish Rautela</h3></div>
+      <div class="card"><h3>Sahil Negi</h3></div>
+      <div class="card"><h3>Naitik Dhiman</h3></div>
+    </div>
+  </section>
 
-    <section>
-      <h2>Why Two Prototypes?</h2>
-      <p>
-        We explored two interaction styles to understand how AI-native
-        experiences support real-world decision-making.
-      </p>
+  <section>
+    <h2>Contact Us</h2>
+    <div class="contact-container">
+      <p>📧 Email: cypherchaser@gmail.com</p>
+      <p>📱 Phone: +91 9050446614</p>
+      <p>🌐 Website: https://cypherchaser.github.io</p>
+    </div>
+  </section>
 
-      <div class="prototype-grid">
-        <div class="prototype">
-          <span class="badge primary">Primary</span>
-          <h3>Health Buddy</h3>
-          <ul>
-            <li>Reasoning-first experience</li>
-            <li>Intent inferred automatically</li>
-            <li>Clear explanation of trade-offs</li>
-          </ul>
-        </div>
+</div>
 
-        <div class="prototype">
-          <span class="badge secondary">Exploratory</span>
-          <h3>Health Assistant (Voice)</h3>
-          <ul>
-            <li>Voice-first interaction</li>
-            <li>Minimal cognitive effort</li>
-            <li>Accessibility exploration</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-  </div>
-
-  <footer>
-    Built for Code To Innovate · AI-Native Consumer Health Experience
-  </footer>
+<footer>
+  Built by Team Cypher Chasers · ENCODE 2026 · IIT Guwahati
+</footer>
 
 </body>
 </html>
